@@ -1,0 +1,70 @@
+services:
+  aggregator:
+    build: ./aggregator
+    depends_on:
+      storage:
+        condition: service_healthy
+      broker:
+        condition: service_started
+    environment:
+      - DATABASE_URL=postgresql://user:pass@storage:5432/pubsub
+      - BROKER_URL=redis://broker:6379
+      - WORKER_COUNT=4
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/app/src
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - internal
+
+  publisher:
+    build: ./publisher
+    depends_on:
+      aggregator:
+        condition: service_healthy
+    environment:
+      - TARGET_URL=http://aggregator:8080
+      - TOTAL_EVENTS=25000
+      - DUPLICATE_PCT=0.35
+    volumes:
+      - ./src:/app/src
+    networks:
+      - internal
+
+  broker:
+    image: redis:7-alpine
+    ports: []
+    volumes:
+      - broker_data:/data
+    networks:
+      - internal
+
+  storage:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=pubsub
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports: []
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d pubsub"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  pg_data:
+  broker_data:
