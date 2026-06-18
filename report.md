@@ -65,7 +65,7 @@ Hasil pengujian stres dengan **26.000 event (20.000 unik + 6.000 duplikat / 30%)
 | Waktu total (local test) | ~117 detik |
 | Throughput publish ke Redis | ~222 events/detik |
 | Worker count | 4 paralel |
-| Konsistensi data akhir | ✅ `unique + dropped == received` |
+| Konsistensi data akhir | ✓ `unique + dropped == received` |
 
 > Throughput dipengaruhi jumlah worker dan latensi I/O ke Postgres. Pada deployment Docker Compose dengan Postgres di container terpisah, throughput lebih tinggi karena network lebih stabil.
 
