@@ -408,9 +408,10 @@ docker compose down -v                    # hapus semua data (reset total)
 
 ## Video Demo
 
-[![YouTube Demo](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube)]()
+[![YouTube Demo](https://img.shields.io/badge/YouTube-Watch%20Demo-red?logo=youtube)](https://youtu.be/F1YnoWiaz-M)
 
-<!-- TODO: Replace with actual YouTube link -->
+**Link:** https://youtu.be/F1YnoWiaz-M
+
 *Demo minimal 25 menit mencakup:*
 
 - Menjalankan stack lengkap dengan Docker Compose
