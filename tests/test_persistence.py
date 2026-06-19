@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from src.dedup_store import DedupStore
 from src.models import Event
 
-DB_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
+DB_URL = "postgresql://user:pass@localhost:5432/pubsub"
 
 @pytest.mark.asyncio
 async def test_dedup_persistence_across_reconnect():

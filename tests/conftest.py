@@ -8,7 +8,7 @@ from src.stats import Stats
 from src.consumer import Consumer
 from src.main import create_app
 
-DB_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
+DB_URL = "postgresql://user:pass@localhost:5432/pubsub"
 REDIS_URL = "redis://localhost:6379"
 
 @pytest.fixture(scope="session")
